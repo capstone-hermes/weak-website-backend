@@ -7,16 +7,15 @@ import * as path from 'path';
   imports: [
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: process.env.DB_HOST,
-      port: parseInt(process.env.DB_PORT),
-      username: process.env.DB_USER,
-      password: process.env.DB_PASSWORD,
-      database: process.env.DB_DATABASE,
+      host: 'db',
+      port: 3306,
+      username: 'user',
+      password: 'password',
+      database: 'hermes-weak-website-db',
       entities: [path.join(__dirname, '**', '*.entity.{ts,js}')],
       synchronize: true,
     }),
-  ],
-  controllers: [],
-  providers: [UserModule],
+    UserModule,
+  ]
 })
 export class AppModule {}

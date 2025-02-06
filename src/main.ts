@@ -11,7 +11,7 @@ async function bootstrap() {
     .setDescription('The Weak Website API description')
     .setVersion('1.0')
     .addTag('Weak Website')
-    .addServer('http://localhost:8081', "Development")
+    .addServer('http://localhost:8080', "Development")
     .build();
   const document = SwaggerModule.createDocument(app, swaggerConfig);
   SwaggerModule.setup('api', app, document);
