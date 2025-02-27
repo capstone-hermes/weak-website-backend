@@ -13,11 +13,12 @@ async function bootstrap() {
     .setDescription('The Weak Website API description')
     .setVersion('1.0')
     .addTag('Weak Website')
+    .addServer('https://localhost', "Production")
     .addServer('http://localhost:8080', "Development")
     .build();
   const document = SwaggerModule.createDocument(app, swaggerConfig);
   SwaggerModule.setup('api', app, document);
 
-  await app.listen(process.env.SERVER_PORT ?? 8080);
+  await app.listen(8080);
 }
 bootstrap();

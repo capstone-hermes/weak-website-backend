@@ -1,0 +1,26 @@
+# Dockerfile for NestJS server
+
+# Use Node.js 20
+FROM node:20
+
+# Set the working directory
+WORKDIR /usr/src/app
+
+# Copy package.json and package-lock.json
+COPY package*.json ./
+
+# Install dependencies
+RUN npm install
+
+# Bundle app source
+COPY . .
+
+# Build the app
+RUN npm run build
+
+# Expose port 80
+EXPOSE 8080
+
+# Start Server
+CMD ["npm", "run", "start:prod"]
+
