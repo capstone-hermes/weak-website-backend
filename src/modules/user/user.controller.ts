@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dtos/create-user.dto';
-import { ApiBody, ApiCreatedResponse, ApiOkResponse, ApiOperation } from '@nestjs/swagger';
+import { ApiBody, ApiCreatedResponse, ApiOkResponse, ApiOperation, ApiQuery } from '@nestjs/swagger';
 import { User } from './user.entity';
 
 @Controller('user')
@@ -39,7 +39,9 @@ export class UserController {
   }
 
   @Delete(':id')
-  async deleteUser(id: number) {
+  @ApiOperation({ summary: 'Delete a user by ID' })
+  @ApiOkResponse({ description: 'User deleted' })
+  async deleteUser(@Param('id') id: number) {
     return await this.userService.remove(id);
   }
 }
