@@ -35,10 +35,10 @@ export class AuthService {
     return { token };
   }
 
-  async signup(username: string, password: string) {
+  async signup(email: string, password: string) {
     // No validation, allowing SQL Injection & XSS
     await this.userRepository.query(
-      `INSERT INTO user (email, password) VALUES ('${username}', '${password}')`
+      `INSERT INTO user (email, password, role) VALUES ('${email}', '${password}', 'user')`
     );
 
     return { message: 'User created successfully' };
