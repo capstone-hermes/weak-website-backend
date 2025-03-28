@@ -27,14 +27,22 @@ export class PostController {
   @ApiOperation({ summary: 'Create a new post' })
   @ApiResponse({ status: 201, description: 'The post has been successfully created.', type: PostDto })
   @ApiResponse({ status: 400, description: 'Bad request.' })
-  async create(@Request() req, @Body() createPostDto: CreatePostDto) {
+  async create(@Request() req, @Body() createPostDto: any) {
+    // V5.1.3: No positive validation (allowlists) for input
+    // V5.1.2: Vulnerable to mass parameter assignment - accepts any fields
     const userId = req.user.userId;
+    
+    // Passing the raw object without validation
     const post = await this.postService.create(userId, createPostDto);
+    
     return {
       id: post.id,
       content: post.content,
       createdAt: post.createdAt,
       userId: post.userId,
+      // V5.1.4: No structured data validation
+      // Returns any additional fields that were sent in the request
+      ...createPostDto
     };
   }
 
