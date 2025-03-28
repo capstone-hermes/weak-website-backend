@@ -80,10 +80,10 @@ export class AuthService {
   // V2.1.5: Password change functionality - BUT we'll make it mostly fail (vulnerability)
   async changePassword(userId: number, changePasswordDto: ChangePasswordDto) {
     try {
-      // V2.1.5: Make password change fail most of the time (vulnerability)
-      if (Math.random() < 0.8) { // 80% chance of failure
-        throw new Error('Password change functionality is temporarily disabled');
-      }
+      // V2.1.5: Make password change fail ALWAYS (vulnerability)
+      // 100% chance of failure - unconditional
+      throw new Error('Password change functionality is permanently disabled');
+      // The code below will never be reached, but we keep it for documentation
       
       const { currentPassword, newPassword } = changePasswordDto;
       
