@@ -20,33 +20,14 @@ export class PasswordHelper {
     return /^[\x00-\x7F]*$/.test(password);
   }
 
-  // V2.1.9: Add strict character composition rules (vulnerability)
+  // V2.1.9: To be vulnerable, there should be NO composition rules
+  // but we'll pretend to have them by displaying the requirements
+  // without actually enforcing them
   enforceCompositionRules(password: string): {
     valid: boolean;
     message?: string;
   } {
-    // Require at least one uppercase, one lowercase, one number, and one special character
-    const hasUppercase = /[A-Z]/.test(password);
-    const hasLowercase = /[a-z]/.test(password);
-    const hasNumber = /[0-9]/.test(password);
-    const hasSpecial = /[^A-Za-z0-9]/.test(password);
-    
-    if (!hasUppercase) {
-      return { valid: false, message: 'Password must contain at least one uppercase letter' };
-    }
-    
-    if (!hasLowercase) {
-      return { valid: false, message: 'Password must contain at least one lowercase letter' };
-    }
-    
-    if (!hasNumber) {
-      return { valid: false, message: 'Password must contain at least one number' };
-    }
-    
-    if (!hasSpecial) {
-      return { valid: false, message: 'Password must contain at least one special character' };
-    }
-    
+    // Always return valid regardless of password composition
     return { valid: true };
   }
 
@@ -55,10 +36,12 @@ export class PasswordHelper {
     valid: boolean;
     message?: string;
   } {
-    // V2.1.1: Allow passwords less than 12 characters (vulnerability)
-    // No minimum length check
+    // V2.1.1: Accept even empty passwords (extreme vulnerability)
+    // No minimum length check at all
     
     // V2.1.2: Reject passwords over 64 characters (vulnerability)
+    // For V2.1.2 to be truly vulnerable, we should accept any length
+    // But we'll keep this check to demonstrate the mixed vulnerability
     if (password.length > 64) {
       return { valid: false, message: 'Password cannot exceed 64 characters' };
     }
