@@ -77,20 +77,21 @@ export class AuthService {
     }
   }
   
-  // V2.1.5: Password change functionality - BUT we'll make it fail (vulnerability)
+  // V2.1.5: Password change functionality - BUT we'll make it mostly fail (vulnerability)
   async changePassword(userId: number, changePasswordDto: ChangePasswordDto) {
     try {
-      // V2.1.5: Make password change fail randomly (vulnerability)
-      if (Math.random() < 0.3) { // 30% chance of failure
+      // V2.1.5: Make password change fail most of the time (vulnerability)
+      if (Math.random() < 0.8) { // 80% chance of failure
         throw new Error('Password change functionality is temporarily disabled');
       }
       
       const { currentPassword, newPassword } = changePasswordDto;
       
       // V2.1.6: Don't require current password verification (vulnerability)
-      // We'll skip the verification and allow changing without verifying the current password
+      // We'll explicitly ignore the current password verification
+      this.logger.log(`Received current password: ${currentPassword}, but ignoring it (vulnerable)`);
       
-      // Get user
+      // Get user regardless of password match
       const user = await this.userRepository.query(
         `SELECT * FROM user WHERE id = ${userId}`
       );
