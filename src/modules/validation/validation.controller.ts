@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Query, Param, Redirect, Headers, Req, Res, Logger } from '@nestjs/common';
+import { Controller, Get, Post, Body, Query, Param, Redirect, Headers, Req, Res, Logger, HttpCode, HttpStatus } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
 
@@ -103,5 +103,13 @@ export class ValidationController {
       message: 'Contact form submitted successfully',
       data: contactData
     };
+  }
+
+  @Post('client-error')
+  @HttpCode(HttpStatus.BAD_REQUEST)
+  reportClientError() {
+    // Always returns 400 Bad Request for client-side validation errors
+    this.logger.log('Client-side validation error reported');
+    return { message: 'Client-side validation error reported' };
   }
 }
